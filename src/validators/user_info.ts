@@ -1,0 +1,11 @@
+import { check } from "express-validator";
+export const user_InfoCheck = () => [
+    check('name', "Ism kiritish shart").notEmpty(),
+    check('surname', "Familiyanigzni kiriting").notEmpty(),
+    check('phone', "Telefon nomeringizni kiriting ").notEmpty(),
+    check('viloyat', "Viloyatngizni tanlang").notEmpty(),
+    check('tuman', "Tumaningizni tanlang").notEmpty(),
+    check('shahar', "Shahringizni tanlang").notEmpty(),
+    check('aniq_adress', "Aniq manzilingizni kiriting").notEmpty()
+   
+]
