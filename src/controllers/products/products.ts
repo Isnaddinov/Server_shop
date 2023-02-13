@@ -3,28 +3,25 @@ import { Products, Types} from "../../types/types"
 import multer from "multer"
 import { client } from "../../routers/Prismaclient";
 import { validationResult } from "express-validator";
+import { getTypesbyId } from "../typs/types";
 
 
 export async function getProductsbyTypeId(req: Request, res: Response) {
     try {
         //Elsatma! paramsda  type_id ni  baramiz
-        const id = +req.params.id
-      //TODO type ni barliqini tekshiradug'n funksiya qoyamiz
-        if(id == undefined || null){
-            res.status(404).json({message: "Products must be type_id"})}
-        const products = await client.products.findMany({where:{typesId:id}})
+        const type_id = +req.params.id
+      const type  = await getTypesbyId(type_id)
+        if(type == undefined || null){
+            res.status(404).json({message: "Type no found"})}
+        const products = await client.products.findMany({where:{typesId:type_id}})
       res.status(200).json({message: "Product has got", products})  
     } catch (error) {
-     res.status(400).json({message: "Error with get product" + error})   
-    }
-
-}
+     res.status(400).json({message: "Error with get product" + error})  }}
 export async function getProductbyId(req: Request, res: Response) {
     try {
         const id = +req.params.id
         if(id == undefined || null){ 
-            res.status(200).json({message: "Products to basket must be product.id "})
-        }
+            res.status(200).json({message: "Products to basket must be product.id "}) }
         const product = await client.products.findMany({where:{id:id}})
       res.status(200).json({message: "Product has got", product})  
     } catch (error) {
