@@ -18,6 +18,8 @@ model user {
   password String
   basket   basket?
   role     String  @default("user")
+  order    order?  @relation(fields: [orderId], references: [id])
+  orderId  Int     @unique
 }
 
 model basket {
@@ -27,17 +29,31 @@ model basket {
   userId Int?   @unique
 }
 
+model order {
+  id           Int         @id @default(autoincrement())
+  user         user?
+  status       String
+  basketTest   basketTest? @relation(fields: [basketTestId], references: [id])
+  basketTestId Int?
+}
+
+model basketTest {
+  id      Int        @id @default(autoincrement())
+  order   order[]
+  product products[]
+}
+
 model user_info {
   id           Int     @id @default(autoincrement())
-  name         String  
-  surname      String  
-  phone        String  
-  viloyat      String  
-  tuman        String  
-  shahar       String  
-  aniq_adress  String  
+  name         String
+  surname      String
+  phone        String
+  viloyat      String
+  tuman        String
+  shahar       String
+  aniq_adress  String
   umumiybahosi Decimal
-  product_id   Int[]   
+  product_id   Int[]
 }
 
 model categories {
@@ -56,13 +72,15 @@ model types {
 }
 
 model products {
-  id      Int     @id @default(autoincrement())
-  name    String
-  img     String
-  price   Decimal
-  desc    String
-  types   types?  @relation(fields: [typesId], references: [id])
-  typesId Int?
+  id           Int         @id @default(autoincrement())
+  name         String
+  img          String
+  price        Decimal
+  desc         String
+  types        types?      @relation(fields: [typesId], references: [id])
+  typesId      Int?
+  basketTest   basketTest? @relation(fields: [basketTestId], references: [id])
+  basketTestId Int?
 }
 
 enum role {

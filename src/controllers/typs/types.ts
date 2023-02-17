@@ -1,83 +1,85 @@
 import { Request, Response } from "express";
-import { Types} from "../../types/types"
+import { Types } from "../../types/types"
 import multer from "multer"
-import { client } from "../../routers/Prismaclient";
 import { validationResult } from "express-validator";
-import { getCategoriesbyId } from "../categoires/catigories";
+import { findCategorybyId } from "../../services/categotries.service";
+import { allTypesGet, findTypeById, putType, putType1, removeType, typesByCatId, writeType } from "../../services/types.service";
 export async function getTypesbyCat_id(req: Request, res: Response) {
-    try {
-        //Eslatma! paramsda  categories_id ni yibaramiz
-        const id= +req.params.id
-        if(id == undefined){res.status(404).json({message: "Products not found or Uncategories_id"})}
-        const types = await client.types.findMany({where:{categoriesId:id}})
-
-      res.status(200).json({message: "Type has got", types})  
-    } catch (error) {
-     res.status(400).json({message: "Error with get type " + error})   
-    }
+  try {
+    //Eslatma! paramsda  categories_id ni yibaramiz
+    const categories_id = +req.params.id
+    const category = await findCategorybyId(categories_id)
+    if (!category) { return res.status(400).json({ message: "Category not found by Id" }) }
+    const types = await typesByCatId(categories_id)
+    res.status(200).json({ message: "Type has got", types })
+  } catch (error) {
+    res.status(400).json({ message: "Error with get type " + error })
+  }
 }
 export async function postTypes(req: Request, res: Response) {
-    try {
-      const errorsv = validationResult(req) 
-        if(!errorsv.isEmpty()){
-            const{errors} = Object(errorsv)
-            const {msg} = errors[0]
-            return res.status(400).json({message: msg})}
-        const body:Types = req.body
-        const img = String(req.file?.path)
-        if(img == null){res.status(400).json({message: "Must be type_img"})}
-        const {name, categories_id} = body
-        const category  = await getCategoriesbyId(categories_id)
-        if(category == undefined || null){
-          res.status(400).json({message: "Categoty not found"}) }
-       const newType =  await client.types.create({data:{name: name, img:img,categoriesId:Number(categories_id)}})
-     res.status(200).json({message: "Type has writed", newType})   
-    } catch (error) { res.status(400).json({message: "Error with write type " + error}) }}
+  try {
+    const errorsv = validationResult(req)
+    if (!errorsv.isEmpty()) {
+      const { errors } = Object(errorsv)
+      const { msg } = errors[0]
+      return res.status(400).json({ message: msg })
+    }
+    const body: Types = req.body
+    const img = String(req.file?.path)
+    if (img == undefined || null) { res.status(400).json({ message: "Must be type_img" }) }
+    const { name, categories_id } = body
+    const category = await findCategorybyId(categories_id)
+    if (!category) { return res.status(400).json({ message: "Categoty not found by Id" }) }
+    const newType = await writeType(name, img, categories_id)
+    res.status(200).json({ message: "Type has writed", newType })
+  } catch (error) { res.status(400).json({ message: "Error with write type " + error }) }
+}
 
 export async function updateTypes(req: Request, res: Response) {
-    try {
-      const errorsv = validationResult(req) 
-      if(!errorsv.isEmpty()){
-          const{errors} = Object(errorsv)
-          const {msg} = errors[0]
-          return res.status(400).json({message: msg})
-      }
-        const id = +req.params.id
-        const body:Types = req.body
-        const img = String(req.file?.path)
-        if(img == null || undefined){res.status(400).json({message: "Must be type_img"})}
-        const{name, categories_id} = body
-        //TODO Category ni qidiradug'n qoyish garak
-        if(categories_id == undefined || null){
-         const type =  await client.types.update({where:{id:id}, data:{name:name, img:img}})
-          res.status(200).json({message: "Type has updated ", type}) 
-        }
-        const type = await client.types.update({where:{id:id}, data:{name:name, img:img, categoriesId:Number(categories_id)}})
-      res.status(200).json({message: "Type has updated ", type})  
-    } catch (error) {
-     res.status(400).json({message: "Error with update type " + error})   
+  try {
+    const errorsv = validationResult(req)
+    if (!errorsv.isEmpty()) {
+      const { errors } = Object(errorsv)
+      const { msg } = errors[0]
+      return res.status(400).json({ message: msg })
     }
+    const id = +req.params.id
+    const body: Types = req.body
+    const img = String(req.file?.path)
+    const findType = await findTypeById(id)
+    if (!findType) { return res.status(400).json({ message: "Type not found by Id" }) }
+    if (img == null || undefined) { res.status(400).json({ message: "Must be type_img" }) }
+    const { name, categories_id } = body
+    if (categories_id == undefined || null) {
+      const type = await putType(id, name, img)
+      return res.status(200).json({ message: "Type has updated ", type })
+    }
+    const category = await findCategorybyId(categories_id)
+    if (!category) { return res.status(400).json({ message: "Category not found by Id" }) }
+    const type = await putType1(id, name, img, categories_id)
+    res.status(200).json({ message: "Type has updated ", type })
+  } catch (error) {
+    res.status(400).json({ message: "Error with update type " + error })
+  }
 
 }
 export async function deleteTypes(req: Request, res: Response) {
-    try {
-        const id = +req.params.id
-        const type =  await client.types.delete({where:{id:id}})
-      res.status(200).json({message: "Type has deleted" , type})  
-    } catch (error) {
-     res.status(400).json({message: "Error with delete type" + error})   
-    }
+  try {
+    const id = +req.params.id
+    const findType = await findTypeById(id)
+    if (!findType) { return res.status(400).json({ message: "Type not found by Id" }) }
+    const type = await removeType(id)
+    res.status(200).json({ message: "Type has deleted", type })
+  } catch (error) {
+    res.status(400).json({ message: "Error with delete type" + error })
+  }
 
 }
 export async function getAllTypes(req: Request, res: Response) {
-    try {
-      const allTypes = await client.types.findMany()
-      res.status(200).json({message: "All types", allTypes})  
-    } catch (error) {
-     res.status(400).json({message: "Error with All types get" + error})  }}
-
-export async function getTypesbyId(type_id: number) {
   try {
-    const type = await client.types.findFirst({where:{id:type_id}})
-      return type
-  } catch (error) { console.error("Error with getbyId type " + error) } }
+    const allTypes = await allTypesGet()
+    res.status(200).json({ message: "All types", allTypes })
+  } catch (error) {
+    res.status(400).json({ message: "Error with All types get" + error })
+  }
+}

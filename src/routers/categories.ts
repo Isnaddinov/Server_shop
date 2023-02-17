@@ -1,5 +1,5 @@
-import {Router} from 'express'
-import { getCategories, postCategories, updateCategories, deleteCategories} from '../controllers/categoires/catigories'
+import { Router } from 'express'
+import { getCategories, postCategory, updateCategory, deleteCategory } from '../controllers/categoires/catigories'
 import { uploadFile } from '../middlewares/uploads'
 import { categoriesCheck } from '../validators/categories'
 import { userMiddleWhere } from '../middlewares/userMiddlewere'
@@ -7,9 +7,9 @@ import { userMiddleWhere } from '../middlewares/userMiddlewere'
 const router = Router()
 
 
-router.post('/post', categoriesCheck(), userMiddleWhere, postCategories)
+router.post('/post', categoriesCheck(), userMiddleWhere, postCategory)
 router.get('/get', getCategories)
-router.delete('/delete/:id', userMiddleWhere, deleteCategories)
-router.put('/put/:id', categoriesCheck(), userMiddleWhere, updateCategories)
+router.delete('/delete/:id', userMiddleWhere, deleteCategory)
+router.put('/put/:id', categoriesCheck(), userMiddleWhere, updateCategory)
 
 module.exports = router

@@ -6,7 +6,7 @@ c) GetAllusers = `Allusers` -> For admin
 ---------------------------------------------
 2. Basket:
 a) Post = `basket` -> (basket.name)
-b) Get = `loginBasket` -> (basket.name, basket.userId) -> Tokenlangan user.if ni query zaprosda `token` dab yibaramiz
+b) Get = `loginBasket` -> (basket.name, basket.userId) -> Tokenlangan user.id ni query zaprosda `token` dab yibaramiz
 c) Delete = `basket` -> (basket.id, basket.name, basket.userId)
 --------------------------------------------------------
 3. Categories:
