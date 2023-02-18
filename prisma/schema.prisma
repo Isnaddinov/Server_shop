@@ -53,7 +53,6 @@ model user_info {
   shahar       String
   aniq_adress  String
   umumiybahosi Decimal
-  product_id   Int[]
 }
 
 model categories {

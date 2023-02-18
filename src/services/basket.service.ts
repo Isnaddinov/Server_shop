@@ -1,6 +1,6 @@
 import { client } from "../routers/Prismaclient";
 
-export async function getbyUserId(id:number){
+export async function getByUserId(id:number){
     try {
         const basket = await client.basket.findUnique({where:{userId:id}})
         const loginBasket = {name: basket?.name, user_id:basket?.userId}
@@ -25,7 +25,7 @@ export async function basketDelete(id:number){
     } catch (error) {
         console.error("Errro with service write basket " + error);}
 }
-export async function findBasketbyId(id:number){
+export async function findBasketById(id:number){
     return await client.basket.findUnique({where:{id}})
     
 }

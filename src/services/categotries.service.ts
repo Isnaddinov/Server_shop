@@ -28,7 +28,7 @@ export async function removeCategory(id:number) {
         console.error("Error with service write Category " + error);
     }
 }
-export async function findCategorybyId(categories_id: number) {
+export async function findCategoryById(categories_id: number) {
     try {
      return await client.categories.findUnique({where:{id:categories_id}})
     } catch (error) { console.error("Error with getbyId category " + error) } }

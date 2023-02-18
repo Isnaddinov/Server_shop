@@ -1,18 +1,18 @@
 import { client } from './../routers/Prismaclient';
 
-export async function productbyTypeId(type_id: number){
+export async function productByTypeId(type_id: number){
    try {
     return await client.products.findMany({ where: { typesId: type_id } })
    } catch (error) {
     console.error("Error with get product service by type_id " + error);  }
 }
-export async function findProductbyId(id: number){
+export async function findProductById(id: number){
    try {
     return await client.products.findUnique({ where: { id: id } })
    } catch (error) {
     console.error("Error with get product service by id " + error);  }
 }
-export async function findProductbyName(name: string){
+export async function findProductByName(name: string){
    try {
     return await client.products.findMany({ where: { name: name } })
    } catch (error) {

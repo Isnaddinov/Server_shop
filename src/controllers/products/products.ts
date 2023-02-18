@@ -4,7 +4,7 @@ import multer from "multer"
 import { client } from "../../routers/Prismaclient";
 import { validationResult } from "express-validator";
 import { findTypeById } from "../../services/types.service";
-import { allProductsGet, findProductbyId, findProductbyName, productbyTypeId, putProduct, putProduct1, removeProdcut, writeProduct } from "../../services/products.service";
+import { allProductsGet, findProductById, findProductByName, productByTypeId, putProduct, putProduct1, removeProdcut, writeProduct } from "../../services/products.service";
 
 export async function getProductsbyTypeId(req: Request, res: Response) {
   try {
@@ -12,7 +12,7 @@ export async function getProductsbyTypeId(req: Request, res: Response) {
     const type_id = +req.params.id
     const type = await findTypeById(type_id)
     if (!type){ return res.status(404).json({ message: "Type not found by typeId" })}
-    const products = await productbyTypeId(type_id)
+    const products = await productByTypeId(type_id)
     res.status(200).json({ message: "Product has got", products })
   } catch (error) {
     res.status(400).json({ message: "Error with get product" + error })
@@ -21,7 +21,7 @@ export async function getProductsbyTypeId(req: Request, res: Response) {
 export async function getProductbyId(req: Request, res: Response) {
   try {
     const id = +req.params.id
-    const product = await findProductbyId(id)
+    const product = await findProductById(id)
     if(!product){return res.status(400).json({message: "Product not found by id"})}
     res.status(200).json({ message: "Product has got", product })
   } catch (error) {
@@ -33,7 +33,7 @@ export async function getSearchProduct(req: Request, res: Response) {
   try {
     //Elsatma! query zaprosda name dab yibaramiz  baramiz
     const { name } = req.query
-    const products = await findProductbyName(String(name))
+    const products = await findProductByName(String(name))
     if(!products){return res.status(400).json({message: "Product not found by name"})}
     res.status(200).json({ message: "Product has got", products })
   } catch (error) {
@@ -73,7 +73,7 @@ export async function updateProducts(req: Request, res: Response) {
     const id = +req.params.id
     const body: Products = req.body
     const img = String(req.file?.path)
-    const findProduct = await findProductbyId(id)
+    const findProduct = await findProductById(id)
     if(!findProduct){return res.status(400).json({message:"Product not found by Id"})}
     if (img === null || undefined) { res.status(400).json({ message: "Must be product_img" }) }
     const { name, desc, price, type_id } = body
@@ -92,7 +92,7 @@ export async function updateProducts(req: Request, res: Response) {
 export async function deleteProducts(req: Request, res: Response) {
   try {
     const id = +req.params.id
-    const findProduct = await findProductbyId(id)
+    const findProduct = await findProductById(id)
     if(!findProduct){return res.status(400).json({message:"Product not found by Id"})}
     const product = await removeProdcut(id)
     res.status(200).json({ message: "Product has deleted ", product })

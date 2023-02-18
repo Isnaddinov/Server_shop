@@ -45,7 +45,7 @@ export async function removeType(id: number){
 }
 export async function allTypesGet(){
    try {
-    return   client.types.findMany()
+    return await client.types.findMany()
    } catch (error) {
     console.error("Error with service allTypesGet type " + error)
    } 
