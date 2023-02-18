@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { User_info } from "../../types/types";
-import { client } from "../../routers/Prismaclient";
 import {validationResult} from "express-validator"
 import { findUser_infoById, removeUser_info, writeUser_info } from "../../services/user_info.service";
 

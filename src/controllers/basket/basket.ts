@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { client } from "../../routers/Prismaclient";
 import { Basket } from "../../types/types";
 import jwt from 'jsonwebtoken'
 import { sec } from "../../middlewares/config";

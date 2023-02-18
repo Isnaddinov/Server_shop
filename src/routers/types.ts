@@ -12,4 +12,5 @@ router.get('/get/:id', getTypesbyCat_id)
 router.get('/getall/admin', userMiddleWhere, getAllTypes)
 router.put('/put/:id',  uploadFile(), userMiddleWhere,updateTypes)
 router.delete('/delete/:id',userMiddleWhere, deleteTypes)
-module.exports = router
+
+export default router

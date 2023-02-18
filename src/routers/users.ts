@@ -10,4 +10,4 @@ router.post('/regisratsion', loginCheck(), regisratsion)
 router.post('/login',login)
 router.get('/auth', userMiddleWhere ,getUsers)
 
-module.exports = router
+export default router

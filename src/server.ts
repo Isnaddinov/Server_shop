@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-const router = require('./routers/index')
+import router from './routers/index'
 
 const app = express()
 
@@ -15,10 +15,6 @@ app.use('/stroyapi', router)
 
 
 
-
-
-
 app.listen(9090, () => {
-    console.log(`Server is running on port: ${9090}`);
-    
+    console.log(`Server is running on port: ${9090}`);  
 })

@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { client } from "../../routers/Prismaclient";
 import { allUsersGet, findUserByUsername, postUser } from "../../services/user.service";
 import { generateAccessToken } from "../../middlewares/generateToken";
 import { validationResult } from "express-validator";

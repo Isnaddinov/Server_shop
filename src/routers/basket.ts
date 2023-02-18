@@ -9,4 +9,4 @@ router.post( '/post',postBasket)
 router.get('/get', getBasket)
 router.delete('/delete/:id', userMiddleWhere, deleteBasket)
 
-module.exports = router
+export default router

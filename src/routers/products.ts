@@ -14,4 +14,4 @@ router.get('/getall/admin', userMiddleWhere, getAllProducts)
 router.put('/put/:id',  uploadFile(), userMiddleWhere, updateProducts)
 router.delete('/delete/:id', userMiddleWhere, deleteProducts)
 
-module.exports = router
+export default router

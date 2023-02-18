@@ -12,4 +12,4 @@ router.get('/get', getCategories)
 router.delete('/delete/:id', userMiddleWhere, deleteCategory)
 router.put('/put/:id', categoriesCheck(), userMiddleWhere, updateCategory)
 
-module.exports = router
+export default router

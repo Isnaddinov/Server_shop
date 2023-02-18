@@ -9,4 +9,4 @@ router.post('/post', user_InfoCheck(), postUser_info)
 router.get('/get', getUser_infoById)
 router.delete('/delete/:id', deleteUser_info)
 
-module.exports = router
+export default router
