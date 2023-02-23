@@ -6,20 +6,13 @@ export type User = {
     password: string
     role: string
 }
+
 export type Basket = {
     id: number
-    name: string
     user_token: string
 }
 
-// export type Basket_products = {
-//     id: number
-//     product_id: number
-//     basket_id_token: string
-// }
-
-export type User_info = {
-    id: number
+export type Order = {
     name: string
     surname: string
     phone: string
@@ -28,7 +21,9 @@ export type User_info = {
     shahar: string
     aniq_adress:  string
     umummiybahosi: number
-    product_id: number[]
+    productsId: number[]
+    status: string
+    basketId: number
 }
 
 export type Categories = {
@@ -47,6 +42,12 @@ export type Products = {
     desc: string
     price: number
     type_id: number
+}
+export type Count = {
+    id: number,
+    productId: number
+    counts: number
+    basketId: number
 }
 
 

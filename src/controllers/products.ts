@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
-import { Products, Types } from "../../types/types"
+import { Products, Types } from "../types/types"
 import multer from "multer"
-import { client } from "../../routers/Prismaclient";
 import { validationResult } from "express-validator";
-import { findTypeById } from "../../services/types.service";
-import { allProductsGet, findProductById, findProductByName, productByTypeId, putProduct, putProduct1, removeProdcut, writeProduct } from "../../services/products.service";
+import { findTypeById } from "../services/types.service";
+import { allProductsGet, findProductById, findProductByName, productByTypeId, putProduct, putProduct1, removeProdcut, writeProduct } from "../services/products.service";
 
 export async function getProductsbyTypeId(req: Request, res: Response) {
   try {
@@ -53,9 +52,9 @@ export async function postProducts(req: Request, res: Response) {
     const img = String(req.file?.path)
     if (img == undefined || null) { res.status(400).json({ message: "Must be product_img" }) }
     const { name, price, desc, type_id } = body
-    const type = await findTypeById(type_id)
+    const type = await findTypeById(+type_id)
     if (!type){ return res.status(404).json({ message: "Type not found by typeId" })}
-    const newProduct = await writeProduct(name, img, price, desc, type_id)
+    const newProduct = await writeProduct(name, img, price, desc, +type_id)
     res.status(200).json({ message: "Product has writed", newProduct })
   } catch (error) {
     res.status(400).json({ message: "Error with write product" + error })
@@ -80,9 +79,9 @@ export async function updateProducts(req: Request, res: Response) {
     if (type_id == undefined || null) {
       const product = await putProduct(id, name, img, price, desc)
       res.status(200).json({ message: "Product has updated", product })}
-      const type = findTypeById(type_id)
+      const type = findTypeById(+type_id)
       if (!type){ return res.status(404).json({ message: "Type not found by typeId" })}
-    const product = await putProduct1(id, name, img, price, desc, type_id)
+    const product = await putProduct1(id, name, img, price, desc, +type_id)
     res.status(200).json({ message: "Product has updated", product })
   } catch (error) {
     res.status(400).json({ message: "Error with update product " + error })

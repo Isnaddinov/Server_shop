@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { regisratsion, login, getUsers } from '../controllers/users/user'
+import { regisratsion, login, getUsers } from '../controllers/user'
 import {check} from 'express-validator'
 import { userMiddleWhere } from '../middlewares/userMiddlewere'
 import { loginCheck } from '../validators/users'

@@ -1,4 +1,4 @@
-import { client } from './../routers/Prismaclient';
+import { client } from './../routers/Prismaclient.routes';
 import bcrypt from 'bcrypt'
 
 export async function findUserById(id: number) { 

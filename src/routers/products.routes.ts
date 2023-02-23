@@ -1,5 +1,6 @@
 import {Router} from 'express'
-import { postProducts, updateProducts, deleteProducts, getAllProducts, getProductbyId, getProductsbyTypeId, getSearchProduct } from '../controllers/products/products'
+import { postProducts, updateProducts, deleteProducts, getAllProducts, 
+    getProductbyId, getProductsbyTypeId, getSearchProduct } from '../controllers/products'
 import { uploadFile } from '../middlewares/uploads'
 import { productsCheck } from '../validators/products'
 import { userMiddleWhere } from '../middlewares/userMiddlewere'

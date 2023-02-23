@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { allUsersGet, findUserByUsername, postUser } from "../../services/user.service";
-import { generateAccessToken } from "../../middlewares/generateToken";
+import { allUsersGet, findUserByUsername, postUser } from "../services/user.service";
+import { generateAccessToken } from "../middlewares/generateToken";
 import { validationResult } from "express-validator";
-import { User } from "../../types/types";
+import { User } from "../types/types";
 import bcrypt from 'bcrypt';
 
 export async function regisratsion(req: Request, res: Response) {

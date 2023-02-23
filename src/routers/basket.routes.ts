@@ -1,5 +1,5 @@
 import {Router} from 'express'
-import { getBasket, postBasket, deleteBasket} from '../controllers/basket/basket'
+import { getBasket, postBasket, deleteBasket} from '../controllers/basket'
 import { userMiddleWhere } from '../middlewares/userMiddlewere'
 const router = Router()
 

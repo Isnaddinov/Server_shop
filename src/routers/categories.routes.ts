@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getCategories, postCategory, updateCategory, deleteCategory } from '../controllers/categoires/catigories'
+import { getCategories, postCategory, updateCategory, deleteCategory } from '../controllers/categories'
 import { uploadFile } from '../middlewares/uploads'
 import { categoriesCheck } from '../validators/categories'
 import { userMiddleWhere } from '../middlewares/userMiddlewere'

@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { Types } from "../../types/types"
+import { Types } from "../types/types"
 import multer from "multer"
 import { validationResult } from "express-validator";
-import { findCategoryById } from "../../services/categotries.service";
-import { allTypesGet, findTypeById, putType, putType1, removeType, typesByCatId, writeType } from "../../services/types.service";
+import { findCategoryById } from "../services/categotries.service";
+import { allTypesGet, findTypeById, putType, putType1, removeType, typesByCatId, writeType } from "../services/types.service";
 
 export async function getTypesbyCat_id(req: Request, res: Response) {
   try {
@@ -29,9 +29,9 @@ export async function postTypes(req: Request, res: Response) {
     const img = String(req.file?.path)
     if (img == undefined || null) { res.status(400).json({ message: "Must be type_img" }) }
     const { name, categories_id } = body
-    const category = await findCategoryById(categories_id)
+    const category = await findCategoryById(+categories_id)
     if (!category) { return res.status(400).json({ message: "Categoty not found by Id" }) }
-    const newType = await writeType(name, img, categories_id)
+    const newType = await writeType(name, img, +categories_id)
     res.status(200).json({ message: "Type has writed", newType })
   } catch (error) { res.status(400).json({ message: "Error with write type " + error }) }
 }
@@ -55,9 +55,9 @@ export async function updateTypes(req: Request, res: Response) {
       const type = await putType(id, name, img)
       return res.status(200).json({ message: "Type has updated ", type })
     }
-    const category = await findCategoryById(categories_id)
+    const category = await findCategoryById(+categories_id)
     if (!category) { return res.status(400).json({ message: "Category not found by Id" }) }
-    const type = await putType1(id, name, img, categories_id)
+    const type = await putType1(id, name, img, +categories_id)
     res.status(200).json({ message: "Type has updated ", type })
   } catch (error) {
     res.status(400).json({ message: "Error with update type " + error })

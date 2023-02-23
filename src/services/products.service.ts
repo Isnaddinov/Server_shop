@@ -1,4 +1,4 @@
-import { client } from './../routers/Prismaclient';
+import { client } from './../routers/Prismaclient.routes';
 
 export async function productByTypeId(type_id: number){
    try {

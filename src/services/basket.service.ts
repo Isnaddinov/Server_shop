@@ -1,20 +1,21 @@
-import { client } from "../routers/Prismaclient";
+import { client } from "../routers/Prismaclient.routes";
 
 export async function getByUserId(id:number){
     try {
-        const basket = await client.basket.findUnique({where:{userId:id}})
-        const loginBasket = {name: basket?.name, user_id:basket?.userId}
-        return loginBasket
+        return await client.basket.findUnique({where:{userId:id}})
+     
     } catch (error) {
         console.error("Errro with service get basket " + error);}
 }
+export async function findBasketByUserId(id:number){
+    const find = await client.basket.findUnique({where:{userId:id}, select:{id:true}})
+    return find?.id
+}
 
-export async function WriteBasket(name:string, id:number){
+export async function WriteBasket(id:number){
     try {
-        const newBasket = await client.basket.create({ data:{name:name, userId:id}})
-        const basketName = newBasket.name
-        const basket = {name: newBasket.name }
-        return basket
+        return await client.basket.create({ data:{userId:id}});
+        
     } catch (error) {
         console.error("Errro with service write basket " + error);}
 }
@@ -26,6 +27,11 @@ export async function basketDelete(id:number){
         console.error("Errro with service write basket " + error);}
 }
 export async function findBasketById(id:number){
-    return await client.basket.findUnique({where:{id}})
+    try {
+        return await client.basket.findUnique({where:{id}})
+        
+    } catch (error) {
+        console.error("Errro with service findBasketbyId basket " + error);}
     
 }
+ 

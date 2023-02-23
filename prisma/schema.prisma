@@ -12,35 +12,38 @@ datasource db {
 }
 
 model user {
-  id       Int     @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
   name     String
   username String
   password String
-  basket   basket?
-  role     String  @default("user")
-  order    order?  @relation(fields: [orderId], references: [id])
-  orderId  Int     @unique
+  role     String @default("user")
 }
 
 model basket {
-  id     Int    @id @default(autoincrement())
-  name   String
-  user   user?  @relation(fields: [userId], references: [id])
-  userId Int?   @unique
+  id     Int @id @default(autoincrement())
+  userId Int @unique
 }
 
 model order {
-  id           Int         @id @default(autoincrement())
-  user         user?
-  status       String
-  basketTest   basketTest? @relation(fields: [basketTestId], references: [id])
-  basketTestId Int?
+  id           Int     @id @default(autoincrement())
+  name         String
+  surname      String
+  phone        String
+  viloyat      String
+  tuman        String
+  shahar       String
+  aniq_adress  String
+  umumiybahosi Decimal
+  products     Int[]
+  status       String  @default("saqlangan")
+  basketId     Int 
 }
 
-model basketTest {
-  id      Int        @id @default(autoincrement())
-  order   order[]
-  product products[]
+model count {
+  id         Int @id @default(autoincrement())
+  productId Int
+  counts     Int
+  basketId   Int
 }
 
 model user_info {
@@ -56,30 +59,24 @@ model user_info {
 }
 
 model categories {
-  id    Int     @id @default(autoincrement())
-  name  String
-  types types[]
+  id   Int    @id @default(autoincrement())
+  name String
 }
 
 model types {
-  id           Int         @id @default(autoincrement())
+  id           Int    @id @default(autoincrement())
   name         String
   img          String
-  products     products[]
-  categories   categories? @relation(fields: [categoriesId], references: [id])
-  categoriesId Int?
+  categoriesId Int
 }
 
 model products {
-  id           Int         @id @default(autoincrement())
-  name         String
-  img          String
-  price        Decimal
-  desc         String
-  types        types?      @relation(fields: [typesId], references: [id])
-  typesId      Int?
-  basketTest   basketTest? @relation(fields: [basketTestId], references: [id])
-  basketTestId Int?
+  id      Int     @id @default(autoincrement())
+  name    String
+  img     String
+  price   Decimal
+  desc    String
+  typesId Int
 }
 
 enum role {

@@ -9,17 +9,12 @@ export function generateAccessToken(id:number, role:string){
 
     return jwt.sign(payload, sec.secret, {expiresIn: "24h"})   
 }
+export function generateUserIdToken(id:number){
+    const payload = {
+        id
+    }
 
-// export function generateBasketidToken(basket_id:number){
-//     const payload = {
-//         basket_id
-//     }
-//     return jwt.sign(payload, sec.secret, {expiresIn: "24h"})   
-// }
+    return jwt.sign(payload, sec.secret, {expiresIn: "24h"})   
+}
 
-// export function generate_BsPrd_idToken(bsPrd_id:number){
-//     const payload = {
-//         bsPrd_id
-//     }
-//     return jwt.sign(payload, sec.secret, {expiresIn: "24h"})   
-// }
+

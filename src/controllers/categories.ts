@@ -1,7 +1,7 @@
-import { Categories } from './../../types/types';
+import { Categories } from '../types/types';
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { getAllCategories, putCategory, removeCategory, writeCategory } from '../../services/categotries.service';
+import { getAllCategories, putCategory, removeCategory, writeCategory } from '../services/categotries.service';
 
 export async function getCategories(req: Request, res: Response) {
     try {
